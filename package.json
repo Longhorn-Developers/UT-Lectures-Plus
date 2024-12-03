@@ -1,30 +1,30 @@
 {
-  "name": "ut-lectures-plus",
-  "description": "This plugin adds a transcript box (with search) to all LectureOnline and TowerLA lectures from UT Austin! Studying has never been easier.",
-  "private": true,
-  "version": "5.0.0",
-  "homepage": "https://github.com/Longhorn-Developers/UT-Lectures-Plus",
-  "type": "module",
-  "scripts": {
-    "dev": "wxt",
-    "dev:firefox": "wxt -b firefox",
-    "build": "wxt build",
-    "build:firefox": "wxt build -b firefox",
-    "zip": "wxt zip",
-    "zip:firefox": "wxt zip -b firefox",
-    "compile": "tsc --noEmit",
-    "postinstall": "wxt prepare"
-  },
-  "dependencies": {
-    "solid-js": "^1.9.3"
-  },
-  "devDependencies": {
-    "@types/chrome": "^0.0.280",
-    "@wxt-dev/module-solid": "^1.1.2",
-    "typescript": "^5.6.3",
-    "wxt": "^0.19.13"
-  },
-  "trustedDependencies": [
-    "spawn-sync"
-  ]
+    "name": "ut-lectures-plus",
+    "description": "This plugin adds a transcript box (with search) to all LectureOnline and TowerLA lectures from UT Austin! Studying has never been easier.",
+    "private": true,
+    "version": "5.0.0",
+    "homepage": "https://github.com/Longhorn-Developers/UT-Lectures-Plus",
+    "type": "module",
+    "scripts": {
+        "dev": "wxt",
+        "dev:firefox": "wxt -b firefox",
+        "build": "wxt build",
+        "build:firefox": "wxt build -b firefox",
+        "zip": "wxt zip",
+        "zip:firefox": "wxt zip -b firefox",
+        "compile": "tsc --noEmit",
+        "postinstall": "wxt prepare"
+    },
+    "dependencies": {
+        "solid-js": "^1.9.3"
+    },
+    "devDependencies": {
+        "@types/chrome": "^0.0.280",
+        "@wxt-dev/module-solid": "^1.1.2",
+        "typescript": "^5.6.3",
+        "wxt": "^0.19.13"
+    },
+    "trustedDependencies": [
+        "spawn-sync"
+    ]
 }

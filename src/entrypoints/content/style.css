@@ -1,0 +1,158 @@
+.caption-box {
+    width: 100%;
+    height: 95%;
+    border: 1px solid #ccc;
+    font: 16px/26px Georgia, Garamond, Serif;
+    overflow: auto;
+    resize: horizontal;
+}
+
+.top_padding {
+    margin-top: 30px;
+}
+
+.cascade_addon * {
+    width: 100%;
+    height: 100%;
+}
+
+.container_addon {
+    width: 100% !important;
+    height: 100%;
+    max-width: 100% !important;
+}
+
+.big_video_addon {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.captionBlob {
+    padding: 10px;
+    height: 95%;
+}
+
+.search-container {
+    padding-top: 10px;
+    width: 20%;
+}
+
+.search-container-tower {
+    width: 20%;
+    height: 100%;
+}
+
+#searchInput {
+    width: 90%;
+    margin: auto;
+}
+
+.highlight {
+    background-color: yellow;
+    font-weight: bold;
+}
+
+.right {
+    margin-top: 1em;
+    float: right;
+}
+
+/* Flex container */
+.flex-container {
+    height: 85%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.video_style {
+    width: 85%;
+}
+
+.ic-Layout-contentWrapper {
+    height: 90%;
+}
+
+pre:hover {
+    color: #6495ed;
+    cursor: pointer;
+    /* text-decoration: underline; */
+}
+
+pre {
+    transition: background-color 0.5s ease;
+    /* Transition for smooth highlighting */
+    width: 90%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    font-size: 1vw;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 2.5%;
+    margin: 2.5%;
+    line-height: 1;
+    overflow-y: hidden;
+}
+
+html {
+    scroll-behavior: smooth !important;
+}
+
+/* CSS */
+.button-4 {
+    appearance: none;
+    background-color: #fafbfc;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
+        rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292e;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+}
+
+/* .button-4:hover {
+  background-color: #f3f4f6;
+  text-decoration: none;
+  transition-duration: 0.1s;
+} */
+
+.button-4:disabled {
+    background-color: #fafbfc;
+    border-color: rgba(27, 31, 35, 0.15);
+    color: #959da5;
+    cursor: default;
+}
+
+.button-4:active {
+    background-color: #edeff2;
+    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+    transition: none 0s;
+}
+
+.button-4:focus {
+    outline: 1px transparent;
+}
+
+.button-4:before {
+    display: none;
+}
+
+.button-4:-webkit-details-marker {
+    display: none;
+}
