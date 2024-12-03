@@ -1,5 +1,5 @@
 export default defineBackground(() => {
-    function list(e) {
+    function list(e: chrome.webRequest.WebResponseCacheDetails) {
         // console.log("what is e?")
         // console.log(e)
         let searchTerm = "utexas";
@@ -29,7 +29,7 @@ export default defineBackground(() => {
         }
     }
 
-    function iframeworkaround(e) {
+    function iframeworkaround(e: chrome.webRequest.WebRequestHeadersDetails) {
         if ((e.method = "GET")) {
             // console.log("what is e?")
             // console.log(e.requestHeaders[10])
@@ -53,7 +53,7 @@ export default defineBackground(() => {
         }
     }
     chrome.webRequest.onCompleted.addListener(
-        function (e) {
+        function (e: chrome.webRequest.WebResponseCacheDetails) {
             {
                 list(e);
             }
@@ -66,7 +66,7 @@ export default defineBackground(() => {
     );
 
     chrome.webRequest.onBeforeSendHeaders.addListener(
-        function (e) {
+        function (e: chrome.webRequest.WebRequestHeadersDetails) {
             {
                 iframeworkaround(e);
             }

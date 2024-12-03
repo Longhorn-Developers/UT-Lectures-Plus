@@ -4,6 +4,7 @@
     "private": true,
     "version": "5.0.0",
     "homepage": "https://github.com/Longhorn-Developers/UT-Lectures-Plus",
+    "license": "MIT",
     "type": "module",
     "scripts": {
         "dev": "wxt",
