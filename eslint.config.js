@@ -3,6 +3,7 @@ import solid from 'eslint-plugin-solid';
 import globals from 'globals';
 import typescript from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import jsdoc from 'eslint-plugin-jsdoc';
 
 export default [
   // Core ESLint configuration
@@ -42,14 +43,10 @@ export default [
       '@typescript-eslint/explicit-module-boundary-types': 'error',
       '@typescript-eslint/no-empty-interface': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
-      '@typescript-eslint/ban-types': 'error',
       '@typescript-eslint/consistent-type-assertions': ['error', {
         assertionStyle: 'as',
         objectLiteralTypeAssertions: 'never',
       }],
-      // TSDoc requirements
-      '@typescript-eslint/require-tsdoc-moveable': 'error',
-      '@typescript-eslint/tsdoc/syntax': 'error',
       '@typescript-eslint/explicit-member-accessibility': ['error', {
         accessibility: 'explicit',
       }],
@@ -69,17 +66,13 @@ export default [
       'solid/prefer-for': 'error',
     },
   },
-  // General styling rules
+  // JSDoc configuration
   {
+    plugins: {
+      jsdoc,
+    },
     rules: {
-      'no-console': ['error', { allow: ['warn', 'error'] }],
-      'no-debugger': 'error',
-      'no-duplicate-imports': 'error',
-      'no-unused-vars': 'off', // Handled by TypeScript
-      'prefer-const': 'error',
-      'quotes': ['error', 'single', { avoidEscape: true }],
-      'semi': ['error', 'always'],
-      // JSDoc configuration
+      ...jsdoc.configs['recommended'].rules,
       'jsdoc/require-jsdoc': ['error', {
         publicOnly: true,
         require: {
@@ -92,12 +85,27 @@ export default [
       }],
       'jsdoc/require-description': 'error',
       'jsdoc/require-param': 'error',
-      'jsdoc/require-param-type': 'error',
       'jsdoc/require-param-description': 'error',
       'jsdoc/require-returns': 'error',
-      'jsdoc/require-returns-type': 'error',
       'jsdoc/require-returns-description': 'error',
       'jsdoc/valid-types': 'error',
+      'jsdoc/check-param-names': 'error',
+      'jsdoc/check-tag-names': 'error',
+      'jsdoc/check-types': 'error',
+      'jsdoc/tag-lines': ['error', 'any', { startLines: 1 }],
+      'jsdoc/no-bad-blocks': 'error',
+    },
+  },
+  // General styling rules
+  {
+    rules: {
+      'no-console': ['error', { allow: ['warn', 'error'] }],
+      'no-debugger': 'error',
+      'no-duplicate-imports': 'error',
+      'no-unused-vars': 'off', // Handled by TypeScript
+      'prefer-const': 'error',
+      'quotes': ['error', 'single', { avoidEscape: true }],
+      'semi': ['error', 'always'],
     },
   },
 //   // Override for test files
