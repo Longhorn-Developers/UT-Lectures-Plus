@@ -1,17 +1,19 @@
+import { defineBackground } from 'wxt/sandbox';
+
 export default defineBackground(() => {
-    function list(e: chrome.webRequest.WebResponseCacheDetails) {
+    function list(e: chrome.webRequest.WebResponseCacheDetails): void {
         // console.log("what is e?")
         // console.log(e)
-        let searchTerm = "utexas";
-        if (e.initiator.includes(searchTerm)) {
+        const searchTerm = 'utexas';
+        if (e.initiator && e.initiator.includes(searchTerm)) {
             // recieved = true;
-            let caption_url = e.url;
+            const caption_url = e.url;
             // console.log("captions found")
-            //console.log(caption_url)
+            // console.log(caption_url)
 
             fetch(caption_url)
-                .then((r) => r.text())
-                .then((result) => {
+                .then(r => r.text())
+                .then(result => {
                     console.log(result);
                     chrome.tabs.query(
                         {
@@ -19,33 +21,37 @@ export default defineBackground(() => {
                             currentWindow: true,
                         },
                         function (tabs) {
-                            chrome.tabs.sendMessage(tabs[0].id, {
-                                captions: result,
-                                source: e.initiator,
-                            });
+                            if (tabs[0].id) {
+                                chrome.tabs.sendMessage(tabs[0].id, {
+                                    captions: result,
+                                    source: e.initiator,
+                                });
+                            }
                         }
                     );
                 });
         }
     }
 
-    function iframeworkaround(e: chrome.webRequest.WebRequestHeadersDetails) {
-        if ((e.method = "GET")) {
+    function iframeworkaround(e: chrome.webRequest.WebRequestHeadersDetails): void {
+        if (e.method === 'GET') {
             // console.log("what is e?")
             // console.log(e.requestHeaders[10])
-            if (e.requestHeaders[10]) {
-                if (e.requestHeaders[10].name === "Referer") {
-                    let video_url = e.requestHeaders[10].value;
-                    //console.log(video_url)
+            if (e.requestHeaders && e.requestHeaders[10]) {
+                if (e.requestHeaders[10].name === 'Referer') {
+                    const video_url = e.requestHeaders[10].value;
+                    // console.log(video_url)
                     chrome.tabs.query(
                         {
                             active: true,
                             currentWindow: true,
                         },
                         function (tabs) {
-                            chrome.tabs.sendMessage(tabs[0].id, {
-                                video_url: video_url,
-                            });
+                            if (tabs[0].id) {
+                                chrome.tabs.sendMessage(tabs[0].id, {
+                                    video_url: video_url,
+                                });
+                            }
                         }
                     );
                 }
@@ -59,10 +65,10 @@ export default defineBackground(() => {
             }
         },
         {
-            urls: ["*://*/*.vtt"],
-            types: ["xmlhttprequest"],
+            urls: ['*://*/*.vtt'],
+            types: ['xmlhttprequest'],
         },
-        ["responseHeaders"]
+        ['responseHeaders']
     );
 
     chrome.webRequest.onBeforeSendHeaders.addListener(
@@ -72,9 +78,9 @@ export default defineBackground(() => {
             }
         },
         {
-            urls: ["*://*/*.edu"],
-            types: ["xmlhttprequest"],
+            urls: ['*://*/*.edu'],
+            types: ['xmlhttprequest'],
         },
-        ["extraHeaders", "requestHeaders"]
+        ['extraHeaders', 'requestHeaders']
     );
 });

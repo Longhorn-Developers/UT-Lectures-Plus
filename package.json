@@ -16,7 +16,9 @@
         "compile": "tsc --noEmit",
         "postinstall": "wxt prepare",
         "lint": "eslint .",
-        "lint:fix": "eslint . --fix"
+        "lint:fix": "eslint . --fix",
+        "format": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+        "format:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
     },
     "dependencies": {
         "solid-js": "^1.9.3"
@@ -28,9 +30,11 @@
         "@typescript-eslint/parser": "^8.17.0",
         "@wxt-dev/module-solid": "^1.1.2",
         "eslint": "^9.16.0",
+        "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-jsdoc": "^50.6.0",
         "eslint-plugin-solid": "^0.14.4",
         "globals": "^15.13.0",
+        "prettier": "3.4.1",
         "typescript": "^5.7.2",
         "typescript-eslint": "^8.17.0",
         "wxt": "^0.19.13"
