@@ -4,6 +4,7 @@ import { defineConfig } from 'wxt';
 // See https://wxt.dev/api/config.html
 export default defineConfig({
     modules: ['@wxt-dev/module-solid'],
+    imports: false, // Disable auto-imports
     vite: () => ({
         plugins: [tailwindcss()],
     }),
