@@ -9,7 +9,8 @@ export default defineConfig({
     }),
     manifest: {
         name: 'UT Lectures Plus',
-        description: 'Enhance your UT Austin Lectures experience.',
+        description:
+            'This plugin adds a transcript box (with search) to all LectureOnline and TowerLA lectures from UT Austin! Studying has never been easier.',
         permissions: ['webRequest', 'tabs', 'storage'],
         host_permissions: ['*://*.la.utexas.edu/*'],
     },
