@@ -40,13 +40,6 @@ export default [
                     varsIgnorePattern: '^_',
                 },
             ],
-            // '@typescript-eslint/explicit-function-return-type': [
-            //     'error',
-            //     {
-            //         allowExpressions: true,
-            //         allowTypedFunctionExpressions: true,
-            //     },
-            // ],
             '@typescript-eslint/explicit-module-boundary-types': 'error',
             '@typescript-eslint/no-empty-interface': 'error',
             '@typescript-eslint/no-explicit-any': 'error',
