@@ -1,14 +1,14 @@
 import { ChevronLeft } from 'lucide-solid';
 import { createEffect, Show, Accessor, createSignal, onCleanup, onMount, JSX } from 'solid-js';
 import { parseVtt } from './utils';
-import { useCueSync } from './hooks/useCueSync';
-import { useTranscriptionScroll } from './hooks/useTranscriptionScroll';
+import { useCueSync } from '@/hooks/useCueSync';
+import { useTranscriptionScroll } from '@/hooks/useTranscriptionScroll';
 import TopBar from '@/components/content/TopBar';
 import Transcription from '@/components/content/Transcription';
 import QuickActions from '@/components/content/quick-actions/QuickActions';
 import { BookmarkProvider } from '@/context/BookmarkProvider';
-import { state, setSelectedAction } from '@/context/SelectedActionStore';
-import SearchStore from '@/context/SearchStore';
+import { state, setSelectedAction } from '@/stores/SelectedActionStore';
+import SearchStore from '@/stores/SearchStore';
 
 interface AppProps {
     vttData: Accessor<string | null>;

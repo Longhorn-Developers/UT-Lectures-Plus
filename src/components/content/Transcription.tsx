@@ -3,9 +3,9 @@ import Cue from './Cue';
 import { RotateCw } from 'lucide-solid';
 import { createMemo, For, Show, createEffect, Accessor, JSX } from 'solid-js';
 import { useBookmarks } from '@/context/BookmarkProvider';
-import { clearSelectedAction, state } from '@/context/SelectedActionStore';
-import SearchStore from '@/context/SearchStore';
-import AISummaryStore from '@/context/AISummaryStore';
+import { clearSelectedAction, state } from '@/stores/SelectedActionStore';
+import SearchStore from '@/stores/SearchStore';
+import AISummaryStore from '@/stores/AISummaryStore';
 import { SolidMarkdown } from 'solid-markdown';
 import remarkBreaks from 'remark-breaks';
 

@@ -2,7 +2,7 @@ import { Accessor, createSignal, createEffect, JSX } from 'solid-js';
 import Button from '../Button';
 import { Sparkles, X } from 'lucide-solid';
 import Dialog from '@corvu/dialog';
-import AISummaryStore from '@/context/AISummaryStore';
+import AISummaryStore from '@/stores/AISummaryStore';
 
 const generateAISummary = async (apiKey: string, text: string): Promise<string> => {
     const prompt = `You’re great at turning spoken content into clear summaries.

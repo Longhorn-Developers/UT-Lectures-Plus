@@ -1,9 +1,9 @@
 import { Bookmark, Download, Search, X } from 'lucide-solid';
 import Button from '../Button';
 import { Accessor, createSignal, JSX, Show } from 'solid-js';
-import SearchStore from '@/context/SearchStore';
+import SearchStore from '@/stores/SearchStore';
 import PlaybackRate from './PlaybackRate';
-import { QuickActionType, state, setSelectedAction } from '@/context/SelectedActionStore';
+import { QuickActionType, state, setSelectedAction } from '@/stores/SelectedActionStore';
 import AISummary from './AISummary';
 
 interface QuickActionProps {

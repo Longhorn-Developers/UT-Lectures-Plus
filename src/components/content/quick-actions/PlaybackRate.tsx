@@ -2,7 +2,7 @@ import Popover from '@corvu/popover';
 import Button from '../Button';
 import { createSignal, JSX, For } from 'solid-js';
 import { Gauge, XIcon } from 'lucide-solid';
-import { setSelectedAction, state } from '@/context/SelectedActionStore';
+import { setSelectedAction, state } from '@/stores/SelectedActionStore';
 
 interface PlaybackRateProps {
     uiContainer: HTMLElement;
