@@ -40,13 +40,13 @@ export default [
                     varsIgnorePattern: '^_',
                 },
             ],
-            '@typescript-eslint/explicit-function-return-type': [
-                'error',
-                {
-                    allowExpressions: true,
-                    allowTypedFunctionExpressions: true,
-                },
-            ],
+            // '@typescript-eslint/explicit-function-return-type': [
+            //     'error',
+            //     {
+            //         allowExpressions: true,
+            //         allowTypedFunctionExpressions: true,
+            //     },
+            // ],
             '@typescript-eslint/explicit-module-boundary-types': 'error',
             '@typescript-eslint/no-empty-interface': 'error',
             '@typescript-eslint/no-explicit-any': 'error',
@@ -134,7 +134,16 @@ export default [
     //   },
     // Files to ignore
     {
-        ignores: ['dist/**', 'build/**', '.output/**', 'coverage/**', 'node_modules/**', '*.config.js', '*.config.ts'],
+        ignores: [
+            'dist/**',
+            'build/**',
+            '.output/**',
+            'coverage/**',
+            'node_modules/**',
+            '*.config.js',
+            '*.config.ts',
+            '.wxt/**',
+        ],
     },
     // Prettier configuration (must be last)
     prettier,

@@ -1,13 +1,16 @@
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'wxt';
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-    srcDir: 'src',
-    extensionApi: 'chrome',
     modules: ['@wxt-dev/module-solid'],
-    imports: false, // Disable auto-imports
+    vite: () => ({
+        plugins: [tailwindcss()],
+    }),
     manifest: {
-        permissions: ['webRequest', 'tabs'],
+        name: 'UT Lectures Plus',
+        description: 'Enhance your UT Austin Lectures experience.',
+        permissions: ['webRequest', 'tabs', 'storage'],
         host_permissions: ['*://*.la.utexas.edu/*'],
     },
 });
