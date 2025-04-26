@@ -1,4 +1,4 @@
-import { Bookmark, Download, Search, X } from 'lucide-solid';
+import { Bookmark, Clipboard, Download, Search, X } from 'lucide-solid';
 import Button from '../Button';
 import { Accessor, createSignal, JSX, Show } from 'solid-js';
 import SearchStore from '@/stores/SearchStore';
@@ -143,7 +143,7 @@ const QuickActions = (props: QuickActionProps): JSX.Element => {
                             />
                         </div>
 
-                        <div>
+                        <div class='flex flex-row items-center gap-2'>
                             <Button
                                 onClick={() => {
                                     // Assuming you want to download the transcript
@@ -180,6 +180,37 @@ const QuickActions = (props: QuickActionProps): JSX.Element => {
                                 }}
                                 label='Transcript'
                                 icon={Download}
+                                active={false}
+                            />
+                            <Button
+                                onClick={() => {
+                                    const vttUrl = props.vttUrl();
+                                    if (vttUrl) {
+                                        // Fetch the VTT content
+                                        fetch(vttUrl)
+                                            .then(response => response.text())
+                                            .then(vttContent => {
+                                                // Convert VTT to plain text
+                                                const txtContent = convertVttToTxt(vttContent);
+
+                                                // Copy to clipboard
+                                                navigator.clipboard
+                                                    .writeText(txtContent)
+                                                    .then(() => {
+                                                        // You could add a temporary success message here
+                                                        alert('Transcript copied to clipboard!');
+                                                    })
+                                                    .catch(err => {
+                                                        console.error('Failed to copy text: ', err);
+                                                    });
+                                            })
+                                            .catch(error => {
+                                                console.error('Error converting VTT to text:', error);
+                                            });
+                                    }
+                                }}
+                                label='Copy'
+                                icon={Clipboard}
                                 active={false}
                             />
                         </div>
