@@ -5,7 +5,7 @@ import { createSignal } from 'solid-js';
 import { createShadowRootUi } from 'wxt/utils/content-script-ui/shadow-root';
 import { browser, defineContentScript } from '#imports';
 export default defineContentScript({
-    matches: ['*://*.la.utexas.edu/*'],
+    matches: ['*://*.la.utexas.edu/app_home/*', '*://*.la.utexas.edu/player/episode/*'],
     cssInjectionMode: 'ui',
     async main(ctx) {
         // Create a signal to store the VTT data
@@ -70,7 +70,7 @@ export default defineContentScript({
             });
 
             setTimeout(() => {
-                const container = document.querySelector('video-js') as HTMLElement;
+                const container = document.querySelector('.video-js') as HTMLElement;
                 if (container) {
                     const video = container.querySelector('video');
 
