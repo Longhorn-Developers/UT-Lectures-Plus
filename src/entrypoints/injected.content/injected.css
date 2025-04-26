@@ -1,10 +1,37 @@
 body {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  background-color: oklch(98.4% 0.003 247.858);
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1rem !important;
+    background-color: oklch(98.4% 0.003 247.858);
+    margin: 0 !important;
 }
 
 #video_app {
-  flex-grow: 1;
+    flex-grow: 1;
+}
+
+/* Lecture Capture styling */
+#loplayer {
+    display: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: fit-content !important;
+}
+
+body[data-sidebar-open='false'] #loplayer {
+    margin-top: 4rem;
+}
+
+#loplayer_html5_api {
+    position: relative;
+}
+
+.headerrow {
+    display: none !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 9999;
 }

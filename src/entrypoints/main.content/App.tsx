@@ -184,6 +184,15 @@ const App = (props: AppProps): JSX.Element => {
         }
     });
 
+    createEffect(() => {
+        // Add data-sidebar-open attribute to the body element
+        if (sidebarOpen()) {
+            document.body.setAttribute('data-sidebar-open', 'true');
+        } else {
+            document.body.setAttribute('data-sidebar-open', 'false');
+        }
+    });
+
     // Set up auto-scrolling with interval
     onMount(() => {
         const scrollInterval = autoScrollHandler(500);
