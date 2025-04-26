@@ -165,6 +165,7 @@ const AISummary = (props: {
                         <div class='mb-4'>
                             <label class='mb-1 block font-sans text-sm font-medium text-gray-700'>OpenAI API Key</label>
                             <input
+                                autocomplete='new-password'
                                 type='password'
                                 value={apiKey()}
                                 onInput={e => setApiKey(e.target.value)}
