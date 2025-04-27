@@ -2,7 +2,7 @@ import { defineBackground, Browser, browser } from '#imports';
 
 export default defineBackground(() => {
     // Store active connections from content scripts
-    const connections: Record<string, Browser.runtime.Port> = {};
+    const connections: Record<number, Browser.runtime.Port> = {};
     // Track if the listener is currently active
     let isListenerActive = false;
 
@@ -11,7 +11,7 @@ export default defineBackground(() => {
         if (details.url.endsWith('.vtt')) {
             const url = new URL(details.url);
             getVTTFile(url.toString())
-                .then(text => {
+                .then(async text => {
                     // Remove the listener after successfully getting the VTT file
                     browser.webRequest.onBeforeRequest.removeListener(requestListener);
                     isListenerActive = false;
@@ -22,18 +22,15 @@ export default defineBackground(() => {
                         url: details.url,
                     };
 
-                    // Instead of querying for the tab, use the details.tabId
-                    // from the request to know which tab made the request
-                    const requestTabId = details.tabId?.toString();
+                    // Send the message to the newly connected content script as it will have a separate transcript from the other tabs
+                    const currentTab = await browser.tabs.query({
+                        active: true,
+                        currentWindow: true,
+                    });
+                    const currentTabId = currentTab[0]?.id;
 
-                    if (requestTabId && connections[requestTabId]) {
-                        connections[requestTabId].postMessage(message);
-                    } else {
-                        // If we can't determine the tab or don't have a connection,
-                        // broadcast to all connected tabs
-                        Object.values(connections).forEach(port => {
-                            port.postMessage(message);
-                        });
+                    if (currentTabId && connections[currentTabId]) {
+                        connections[currentTabId].postMessage(message);
                     }
                 })
                 .catch(error => {
@@ -55,13 +52,13 @@ export default defineBackground(() => {
     // Listen for connection attempts from content scripts
     browser.runtime.onConnect.addListener(port => {
         const sender = port.sender;
-        const tabId = sender?.tab?.id?.toString();
+        const tabId = sender?.tab?.id;
 
         if (!tabId) {
             return;
         }
 
-        // Store the connection using tabId as a string key
+        // Store the connection
         connections[tabId] = port;
         console.warn(`Connected to tab ${tabId}`);
 

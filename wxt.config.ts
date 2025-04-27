@@ -13,7 +13,12 @@ export default defineConfig({
         name: 'UT Lectures Plus',
         description:
             'This plugin adds a transcript box (with search) to all LectureOnline and TowerLA lectures from UT Austin! Studying has never been easier.',
-        permissions: ['webRequest', 'storage'],
+        permissions: ['webRequest', 'storage', 'tabs'],
         host_permissions: ['*://*.la.utexas.edu/*'],
+        browser_specific_settings: {
+            gecko: {
+                id: 'ut-lectures-plus@ut.com',
+            },
+        },
     },
 });
