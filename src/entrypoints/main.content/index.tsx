@@ -47,6 +47,9 @@ export default defineContentScript({
                     // Stop observing since we found the video
                     obs.disconnect();
 
+                    // Clear the fallback timeout since we found the video
+                    clearTimeout(fallbackTimeout);
+
                     videoContainer.style.borderRadius = '1rem';
                     videoContainer.style.backgroundColor = 'oklch(98.4% 0.003 247.858)';
                     videoContainer.style.overflow = 'hidden';
@@ -69,7 +72,8 @@ export default defineContentScript({
                 subtree: true,
             });
 
-            setTimeout(() => {
+            // Store the timeout reference so we can clear it if needed
+            const fallbackTimeout = setTimeout(() => {
                 const container = document.querySelector('.video-js') as HTMLElement;
                 if (container) {
                     const video = container.querySelector('video');
