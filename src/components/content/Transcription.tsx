@@ -69,7 +69,48 @@ const Transcription = (props: TranscriptionProps): JSX.Element => {
     return (
         <Show
             when={props.cues().length > 0}
-            fallback={<div class='py-4 text-center text-gray-500'>Loading transcript...</div>}
+            fallback={
+                <div class='flex flex-col items-center justify-center gap-2 py-6 text-gray-500'>
+                    <div class='animate-spin text-ut-burntorange'>
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='24'
+                            height='24'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='currentColor'
+                            stroke-width='2'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                        >
+                            <path d='M21 12a9 9 0 1 1-6.219-8.56'></path>
+                        </svg>
+                    </div>
+                    <p>Loading transcript...</p>
+                    <button
+                        class='mt-1 text-ut-burntorange flex items-center gap-1.5 font-medium hover:cursor-pointer hover:underline'
+                        onClick={() => {
+                            window.location.reload();
+                        }}
+                    >
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='14'
+                            height='14'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='currentColor'
+                            stroke-width='2'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                        >
+                            <path d='M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8'></path>
+                            <path d='M21 3v5h-5'></path>
+                        </svg>
+                        Reload page
+                    </button>
+                </div>
+            }
         >
             <div class='relative w-full flex-1 overflow-hidden'>
                 <div
