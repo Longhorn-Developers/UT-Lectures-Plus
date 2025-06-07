@@ -84,7 +84,7 @@ const Cue = (props: CueProps): JSX.Element => {
             aria-label='Cue'
             role='button'
             tabIndex={0}
-            class='group hover:bg-ut-burntorange/5 focus:bg-ut-burntorange/10 focus:outline-ut-burntorange grid w-full grid-cols-[1fr_6fr] gap-x-2 rounded-md p-2 transition-colors duration-200 hover:cursor-pointer focus:outline-2'
+            class='group hover:bg-ut-burntorange/5 focus:bg-ut-burntorange/10 grid w-full grid-cols-[1fr_6fr] gap-x-2 rounded-md p-2 transition-colors duration-200 hover:cursor-pointer'
             onClick={() => {
                 props.onClick();
             }}
