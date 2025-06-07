@@ -109,7 +109,7 @@ const QuickActions = (props: QuickActionProps): JSX.Element => {
             style={{
                 'border-bottom': '1px solid oklch(92.9% 0.013 255.508)',
             }}
-            class='flex items-center gap-2 px-4 pb-3 shadow-xl'
+            class='flex items-center gap-2 px-4 pb-3'
         >
             <Show
                 when={state.selectedAction == 'search'}
