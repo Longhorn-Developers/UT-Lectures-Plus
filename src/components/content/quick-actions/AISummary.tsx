@@ -144,7 +144,7 @@ const AISummary = (props: {
                 <Dialog.Overlay class='data-open:animate-in data-open:fade-in-0% data-closed:animate-out data-closed:fade-out-0% fixed inset-0 z-50 bg-black/80' />
                 <Dialog.Content class='data-open:animate-in data-open:fade-in-0% data-open:zoom-in-95% data-open:slide-in-from-top-10% data-closed:animate-out data-closed:fade-out-0% data-closed:zoom-out-95% data-closed:slide-out-to-top-10% fixed top-1/2 left-1/2 z-50 max-w-md min-w-80 -translate-x-1/2 -translate-y-1/2 rounded-lg border border-gray-200 bg-white p-0 shadow-2xl'>
                     {/* Header section */}
-                    <div class='relative border-b border-gray-100 bg-gradient-to-r from-orange-50 to-white px-6 py-4'>
+                    <div class='relative px-6 py-4'>
                         <Dialog.Close
                             onClick={() => AISummaryStore.setOpen(false)}
                             class='absolute top-4 right-4 text-gray-400 hover:cursor-pointer hover:text-gray-600'
