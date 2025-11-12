@@ -51,7 +51,25 @@ const App = (props: AppProps): JSX.Element => {
         height: 0,
         opacity: 0,
     });
+    /** arrowKeyTimeUpdate finds the video element and creates two event listeners  which
+     * rewind and fast forward when the left and right arrow keys are clicked, respectively.
+     * <br> pre: none
+     * <br> post: leftarrowclick-->rewind TIME seconds, rightarrowclick-->fast forward TIME sec
+     */
+    const arrowKeyTimeUpdate = () => {
+        const video = document.querySelector('video');
+        const TIME = 10;
+        console.log(video);
+        video?.addEventListener('keydown', (event) => {
+            const key = event.key;
+            const callback = {
+                "ArrowLeft"  : () => video.currentTime -= TIME,
+                "ArrowRight" : () => video.currentTime += TIME,
+            }[event.key]
+            callback?.();
+        })
 
+    }
     const { clear } = SearchStore;
 
     let transcriptContainerRef!: HTMLDivElement;
@@ -223,7 +241,7 @@ const App = (props: AppProps): JSX.Element => {
                 sidebarRef.style.animation = 'var(--animate-slide-in)';
             }, 100);
         }
-
+        arrowKeyTimeUpdate()
         onCleanup(() => {
             clearInterval(scrollInterval);
             clearInterval(overlayUpdateInterval);
