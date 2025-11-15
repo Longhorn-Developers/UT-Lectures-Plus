@@ -51,10 +51,12 @@ const App = (props: AppProps): JSX.Element => {
         height: 0,
         opacity: 0,
     });
-    /** arrowKeyTimeUpdate finds the video element and creates two event listeners  which
-     * rewind and fast forward when the left and right arrow keys are clicked, respectively.
+    /** videoTimeControl finds the video element and creates three event listeners  which
+     * rewind and fast forward when the left and right arrow keys are clicked, respectively, and
+     * allow pausing by pressing spacebar.
      * <br> pre: none
-     * <br> post: leftarrowclick-->rewind TIME seconds, rightarrowclick-->fast forward TIME sec
+     * <br> post: leftarrowclick-->rewind TIME seconds, rightarrowclick-->fast forward TIME sec,
+     * spacebar-->videoe paused/played
      */
     const videoTimeControl = () => {
         const video: HTMLVideoElement | null = document.querySelector('video');
@@ -71,10 +73,10 @@ const App = (props: AppProps): JSX.Element => {
 
     }
 
-    /** captionResizingUpdate finds the video element and creates two event listeners  which
-     * rewind and fast forward when the left and right arrow keys are clicked, respectively.
+    /** captionResizingUpdate finds the video element and creates two event listeners which
+     * decrease and increase caption size when the - and = keys are clicked, respectively.
      * <br> pre: none
-     * <br> post: leftarrowclick-->rewind TIME seconds, rightarrowclick-->fast forward TIME sec
+     * <br> post: "-"-->shrink captions, "="-->enlarge captions by native increment
      */
     const captionResizingControl = () => {
         const fontPercent = document.getElementsByClassName("vjs-font-percent vjs-track-setting")[0];
