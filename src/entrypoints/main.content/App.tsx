@@ -56,19 +56,47 @@ const App = (props: AppProps): JSX.Element => {
      * <br> pre: none
      * <br> post: leftarrowclick-->rewind TIME seconds, rightarrowclick-->fast forward TIME sec
      */
-    const arrowKeyTimeUpdate = () => {
-        const video = document.querySelector('video');
+    const videoTimeControl = () => {
+        const video: HTMLVideoElement | null = document.querySelector('video');
         const TIME = 10;
-        console.log(video);
         video?.addEventListener('keydown', (event) => {
-            const key = event.key;
+            const key: string = event.key;
             const callback = {
                 "ArrowLeft"  : () => video.currentTime -= TIME,
                 "ArrowRight" : () => video.currentTime += TIME,
-            }[event.key]
+                " ": () => video.paused ? video.play() : video.pause()
+            }[key];
             callback?.();
         })
 
+    }
+
+    /** captionResizingUpdate finds the video element and creates two event listeners  which
+     * rewind and fast forward when the left and right arrow keys are clicked, respectively.
+     * <br> pre: none
+     * <br> post: leftarrowclick-->rewind TIME seconds, rightarrowclick-->fast forward TIME sec
+     */
+    const captionResizingControl = () => {
+        const fontPercent = document.getElementsByClassName("vjs-font-percent vjs-track-setting")[0];
+        // can't use sizeSelect for event listener because it isn't permanent, use document
+        document?.addEventListener('keydown', (event) => {
+            const key: string = event.key;
+            // to avoid error, only change selected size and trigger event if valid operation
+            const sizeSelect = fontPercent.querySelector("select");
+            if (sizeSelect) {
+                if (key == "=") {
+                    if (sizeSelect?.selectedIndex < sizeSelect?.options?.length - 1) {
+                        sizeSelect.selectedIndex += 1;
+                        sizeSelect.dispatchEvent(new Event('change'));
+                    }
+                } else if (event.key == "-") {
+                    if (sizeSelect?.selectedIndex > 0) {
+                        sizeSelect.selectedIndex -= 1;
+                        sizeSelect.dispatchEvent(new Event('change'));
+                    }
+                }
+            }
+        })
     }
     const { clear } = SearchStore;
 
@@ -241,7 +269,8 @@ const App = (props: AppProps): JSX.Element => {
                 sidebarRef.style.animation = 'var(--animate-slide-in)';
             }, 100);
         }
-        arrowKeyTimeUpdate()
+        videoTimeControl()
+        captionResizingControl()
         onCleanup(() => {
             clearInterval(scrollInterval);
             clearInterval(overlayUpdateInterval);
