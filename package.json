@@ -2,7 +2,7 @@
     "name": "ut-lectures-plus",
     "description": "This plugin adds a transcript box (with search) to all LectureOnline and TowerLA lectures from UT Austin! Studying has never been easier.",
     "private": true,
-    "version": "6.1.0",
+    "version": "6.0.0",
     "type": "module",
     "scripts": {
         "dev": "wxt",
