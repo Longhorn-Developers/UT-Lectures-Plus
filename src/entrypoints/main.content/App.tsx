@@ -80,12 +80,10 @@ const App = (props: AppProps): JSX.Element => {
      * <br> post: "-"-->shrink captions, "="-->enlarge captions by native increment
      */
     const captionsControl = () => {
-        var keyPressed: { [key: string]: boolean } = {}
         const fontPercent = document.getElementsByClassName("vjs-font-percent vjs-track-setting")[0];
         // can't use sizeSelect for event listener because it isn't permanent, use document
         document?.addEventListener('keydown', (event) => {
             const key: string = event.key;
-            keyPressed[key] = true;
             // to avoid error, only change selected size and trigger event if valid operation
             const sizeSelect = fontPercent.querySelector("select");
             if (sizeSelect) {
