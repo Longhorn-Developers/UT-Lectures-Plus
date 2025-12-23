@@ -37,7 +37,6 @@ const App = (props: AppProps): JSX.Element => {
         activeCueElement,
         setActiveCueElement,
     } = useCueSync();
-
     const { autoScroll, setAutoScroll, isScrolledToBottom, setIsScrolledToBottom } = useTranscriptionScroll();
 
     const [sidebarOpen, setSidebarOpen] = createSignal(true);
@@ -51,12 +50,14 @@ const App = (props: AppProps): JSX.Element => {
         height: 0,
         opacity: 0,
     });
+
+
     /** videoTimeControl finds the video element and creates three event listeners  which
      * rewind and fast forward when the left and right arrow keys are clicked, respectively, and
      * allow pausing by pressing spacebar.
      * <br> pre: none
      * <br> post: leftarrowclick-->rewind TIME seconds, rightarrowclick-->fast forward TIME sec,
-     * spacebar-->videoe paused/played
+     * spacebar-->video paused/played
      */
     const videoTimeControl = () => {
         const video: HTMLVideoElement | null = document.querySelector('video');
@@ -64,8 +65,8 @@ const App = (props: AppProps): JSX.Element => {
         video?.addEventListener('keydown', (event) => {
             const key: string = event.key;
             const callback = {
-                "ArrowLeft"  : () => video.currentTime -= TIME,
-                "ArrowRight" : () => video.currentTime += TIME,
+                "ArrowLeft": () => video.currentTime -= TIME,
+                "ArrowRight": () => video.currentTime += TIME,
                 " ": () => video.paused ? video.play() : video.pause()
             }[key];
             callback?.();
@@ -73,30 +74,36 @@ const App = (props: AppProps): JSX.Element => {
 
     }
 
-    /** captionResizingUpdate finds the video element and creates two event listeners which
+    /** captionsControl finds the video element and creates two event listeners which
      * decrease and increase caption size when the - and = keys are clicked, respectively.
      * <br> pre: none
      * <br> post: "-"-->shrink captions, "="-->enlarge captions by native increment
      */
-    const captionResizingControl = () => {
+    const captionsControl = () => {
+        var keyPressed: { [key: string]: boolean } = {}
         const fontPercent = document.getElementsByClassName("vjs-font-percent vjs-track-setting")[0];
         // can't use sizeSelect for event listener because it isn't permanent, use document
         document?.addEventListener('keydown', (event) => {
             const key: string = event.key;
+            keyPressed[key] = true;
             // to avoid error, only change selected size and trigger event if valid operation
             const sizeSelect = fontPercent.querySelector("select");
             if (sizeSelect) {
-                if (key == "=") {
-                    if (sizeSelect?.selectedIndex < sizeSelect?.options?.length - 1) {
-                        sizeSelect.selectedIndex += 1;
-                        sizeSelect.dispatchEvent(new Event('change'));
-                    }
-                } else if (event.key == "-") {
-                    if (sizeSelect?.selectedIndex > 0) {
-                        sizeSelect.selectedIndex -= 1;
-                        sizeSelect.dispatchEvent(new Event('change'));
-                    }
-                }
+                const callback = {
+                    "=": () => {
+                        if (sizeSelect?.selectedIndex < sizeSelect?.options?.length - 1) {
+                            sizeSelect.selectedIndex += 1;
+                            sizeSelect.dispatchEvent(new Event('change'));
+                        }
+                    },
+                    "-": () => {
+                        if (sizeSelect?.selectedIndex > 0) {
+                            sizeSelect.selectedIndex -= 1;
+                            sizeSelect.dispatchEvent(new Event('change'));
+                        }
+                    },
+                }[key];
+                callback?.();
             }
         })
     }
@@ -241,7 +248,7 @@ const App = (props: AppProps): JSX.Element => {
         }
     });
 
-    // Set up auto-scrolling with interval
+    // Set up auto-scrolling with interval along with video hotkey control
     onMount(() => {
         const scrollInterval = autoScrollHandler(500);
 
@@ -272,7 +279,7 @@ const App = (props: AppProps): JSX.Element => {
             }, 100);
         }
         videoTimeControl()
-        captionResizingControl()
+        captionsControl()
         onCleanup(() => {
             clearInterval(scrollInterval);
             clearInterval(overlayUpdateInterval);
@@ -280,12 +287,15 @@ const App = (props: AppProps): JSX.Element => {
     });
 
     onCleanup(() => {
+        //video keydown is for videoTimeCOntrol, and document keydown is for captionControl
         const video = props.videoElement();
         if (video) {
-            video.removeEventListener('timeupdate', () => {});
-            video.removeEventListener('play', () => {});
-            video.removeEventListener('pause', () => {});
+            video.removeEventListener('timeupdate', () => { });
+            video.removeEventListener('play', () => { });
+            video.removeEventListener('pause', () => { });
+            video.removeEventListener('keydown', () => {});
         }
+        document.removeEventListener('keydown', () => {});
     });
 
     const handleManualScroll = () => {
@@ -377,7 +387,7 @@ const App = (props: AppProps): JSX.Element => {
 
                     <QuickActions uiContainer={props.uiContainer} setAutoScroll={setAutoScroll} vttUrl={props.vttUrl} />
 
-                    <BookmarkProvider>
+                    <BookmarkProvider activeCueElement={activeCueElement}>
                         <Transcription
                             ref={transcriptContainerRef}
                             videoElement={props.videoElement}

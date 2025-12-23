@@ -69,14 +69,13 @@ const Cue = (props: CueProps): JSX.Element => {
 
     const onBookmarkClick = (e: MouseEvent) => {
         e.stopPropagation();
-
         if (isBookmarked(props.id)) {
             removeBookmark(props.id);
         } else {
             addBookmark({ id: props.id, start: props.start, text: props.text });
         }
     };
-
+    
     const bookmarkState = () => isBookmarked(props.id);
 
     return (
@@ -94,6 +93,8 @@ const Cue = (props: CueProps): JSX.Element => {
                 }
             }}
             data-cue-id={props.id}
+            data-start={props.start}
+            data-text={props.text}
         >
             <div class='text-ut-burntorange flex h-full flex-col items-center gap-1 group-hover:underline'>
                 <p class='text-ut-burntorange text-sm font-medium'>{formatTime(props.start)}</p>
