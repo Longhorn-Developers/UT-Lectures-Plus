@@ -103,7 +103,6 @@ export function BookmarkProvider(props: { children: JSX.Element, activeCueElemen
         window.removeEventListener('beforeunload', saveBookmarks);
         document.removeEventListener('visibilitychange', saveBookmarks);
         document.removeEventListener('keydown', checkBookmarkHotkey);
-        document.removeEventListener('keydown', checkBookmarkHotkey)
         // Final save when component unmounts
         saveBookmarks();
     });
