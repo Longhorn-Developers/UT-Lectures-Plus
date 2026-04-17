@@ -57,6 +57,9 @@ importers:
       '@wxt-dev/module-solid':
         specifier: ^1.1.4
         version: 1.1.4(solid-js@1.9.12)(vite@6.3.5(@types/node@22.15.30)(jiti@2.6.1)(lightningcss@1.32.0))(wxt@0.20.7(@types/node@22.15.30)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.42.0))
+      globals:
+        specifier: ^17.4.0
+        version: 17.5.0
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1580,6 +1583,10 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
+    engines: {node: '>=18'}
+
+  globals@17.5.0:
+    resolution: {integrity: sha512-qoV+HK2yFl/366t2/Cb3+xxPUo5BuMynomoDmiaZBIdbs+0pYbjfZU+twLhGKp4uCZ/+NbtpVepH5bGCxRyy2g==}
     engines: {node: '>=18'}
 
   graceful-fs@4.2.10:
@@ -4640,6 +4647,8 @@ snapshots:
   globals@11.12.0: {}
 
   globals@14.0.0: {}
+
+  globals@17.5.0: {}
 
   graceful-fs@4.2.10: {}
 

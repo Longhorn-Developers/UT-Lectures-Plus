@@ -40,6 +40,7 @@ export default [
                     varsIgnorePattern: '^_',
                 },
             ],
+            'no-undef': 'off',
             '@typescript-eslint/explicit-module-boundary-types': 'error',
             '@typescript-eslint/no-empty-interface': 'error',
             '@typescript-eslint/no-explicit-any': 'error',

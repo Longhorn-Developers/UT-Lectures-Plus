@@ -49,6 +49,7 @@ Don’t say it’s a transcript or mention that it came from one.
  * @param props.vttUrl - The URL of the VTT file to summarize.
  * @param props.onClick - Function to call when the button is clicked.
  * @param props.uiContainer - The container element for the UI.
+ * @returns The AISummary dialog component.
  */
 const AISummary = (props: {
     active: boolean;

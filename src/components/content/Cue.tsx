@@ -94,6 +94,8 @@ const Cue = (props: CueProps): JSX.Element => {
                 }
             }}
             data-cue-id={props.id}
+            data-start={props.start}
+            data-text={props.text}
         >
             <div class='text-ut-burntorange flex h-full flex-col items-center gap-1 group-hover:underline'>
                 <p class='text-ut-burntorange text-sm font-medium'>{formatTime(props.start)}</p>
