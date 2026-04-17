@@ -62,17 +62,16 @@ const App = (props: AppProps): JSX.Element => {
     const videoTimeControl = () => {
         const video: HTMLVideoElement | null = document.querySelector('video');
         const TIME = 10;
-        video?.addEventListener('keydown', (event) => {
+        video?.addEventListener('keydown', event => {
             const key: string = event.key;
             const callback = {
-                "ArrowLeft": () => video.currentTime -= TIME,
-                "ArrowRight": () => video.currentTime += TIME,
-                " ": () => video.paused ? video.play() : video.pause()
+                ArrowLeft: () => (video.currentTime -= TIME),
+                ArrowRight: () => (video.currentTime += TIME),
+                ' ': () => (video.paused ? video.play() : video.pause()),
             }[key];
             callback?.();
-        })
-
-    }
+        });
+    };
 
     /** captionsControl finds the video element and creates two event listeners which
      * decrease and increase caption size when the - and = keys are clicked, respectively.
@@ -80,21 +79,21 @@ const App = (props: AppProps): JSX.Element => {
      * <br> post: "-"-->shrink captions, "="-->enlarge captions by native increment
      */
     const captionsControl = () => {
-        const fontPercent = document.getElementsByClassName("vjs-font-percent vjs-track-setting")[0];
+        const fontPercent = document.getElementsByClassName('vjs-font-percent vjs-track-setting')[0];
         // can't use sizeSelect for event listener because it isn't permanent, use document
-        document?.addEventListener('keydown', (event) => {
+        document?.addEventListener('keydown', event => {
             const key: string = event.key;
             // to avoid error, only change selected size and trigger event if valid operation
-            const sizeSelect = fontPercent.querySelector("select");
+            const sizeSelect = fontPercent.querySelector('select');
             if (sizeSelect) {
                 const callback = {
-                    "=": () => {
+                    '=': () => {
                         if (sizeSelect?.selectedIndex < sizeSelect?.options?.length - 1) {
                             sizeSelect.selectedIndex += 1;
                             sizeSelect.dispatchEvent(new Event('change'));
                         }
                     },
-                    "-": () => {
+                    '-': () => {
                         if (sizeSelect?.selectedIndex > 0) {
                             sizeSelect.selectedIndex -= 1;
                             sizeSelect.dispatchEvent(new Event('change'));
@@ -103,8 +102,8 @@ const App = (props: AppProps): JSX.Element => {
                 }[key];
                 callback?.();
             }
-        })
-    }
+        });
+    };
 
     const { clear } = SearchStore;
 
@@ -277,8 +276,8 @@ const App = (props: AppProps): JSX.Element => {
                 sidebarRef.style.animation = 'var(--animate-slide-in)';
             }, 100);
         }
-        videoTimeControl()
-        captionsControl()
+        videoTimeControl();
+        captionsControl();
         onCleanup(() => {
             clearInterval(scrollInterval);
             clearInterval(overlayUpdateInterval);
@@ -289,9 +288,9 @@ const App = (props: AppProps): JSX.Element => {
         //video keydown is for videoTimeControl, and document keydown is for captionControl
         const video = props.videoElement();
         if (video) {
-            video.removeEventListener('timeupdate', () => { });
-            video.removeEventListener('play', () => { });
-            video.removeEventListener('pause', () => { });
+            video.removeEventListener('timeupdate', () => {});
+            video.removeEventListener('play', () => {});
+            video.removeEventListener('pause', () => {});
             video.removeEventListener('keydown', () => {});
         }
         document.removeEventListener('keydown', () => {});

@@ -44,7 +44,10 @@ const BookmarkContext = createContext<BookmarkContextValue>({
  * @param props.activeCueElement the currently active cue (transcript element)
  * @returns The BookmarkProvider component.
  */
-export function BookmarkProvider(props: { children: JSX.Element, activeCueElement: Accessor<HTMLDivElement | null> }): JSX.Element {
+export function BookmarkProvider(props: {
+    children: JSX.Element;
+    activeCueElement: Accessor<HTMLDivElement | null>;
+}): JSX.Element {
     // Store all bookmarks organized by URL
     const [allBookmarks, setAllBookmarks] = createStore<BookmarksByUrl>({});
 
@@ -97,7 +100,7 @@ export function BookmarkProvider(props: { children: JSX.Element, activeCueElemen
             }
         });
         // Add event listener for making a bookmark with Ctrl + B
-        document.addEventListener('keydown', checkBookmarkHotkey)
+        document.addEventListener('keydown', checkBookmarkHotkey);
     });
 
     // Clean up event listeners when component unmounts
@@ -135,7 +138,7 @@ export function BookmarkProvider(props: { children: JSX.Element, activeCueElemen
     };
 
     /** checkBookmarkHotkey bookmarks the current caption if there is one with the Ctrl + B hotkey,
-     * and removes the bookmark instead if it already exists. Has a 0.25 second cooldown to prevent 
+     * and removes the bookmark instead if it already exists. Has a 0.25 second cooldown to prevent
      * accidental double-presses, and holding down the key will not trigger multiple events.
      * <br> pre: current caption exists, ctrl + b pressed, event is not repeat
      * <br> post: current caption is bookmarked or unbookmarked if the bookmark exists
@@ -144,22 +147,22 @@ export function BookmarkProvider(props: { children: JSX.Element, activeCueElemen
     function checkBookmarkHotkey(event: KeyboardEvent) {
         const key: string = event.key;
         // prevent repeat by avoiding if event.repeat is true, otherwise if ctrl + b then bookmark
-        if (key == "b" && event.ctrlKey && !event.repeat) {
+        if (key == 'b' && event.ctrlKey && !event.repeat) {
             if (cooldownTimer != null) {
                 // too soon since previous click, return before work done
                 return;
             } else {
-                const cooldownAmount: number = 250 // milliseconds
+                const cooldownAmount: number = 250; // milliseconds
                 cooldownTimer = setTimeout(() => {
                     cooldownTimer = null; // Reset cooldown after 0.25sec delay
                 }, cooldownAmount);
             }
-            const toBookmark: HTMLDivElement | null = props.activeCueElement()
+            const toBookmark: HTMLDivElement | null = props.activeCueElement();
             if (toBookmark) {
-                const id = toBookmark.attributes.getNamedItem("data-cue-id")?.value
-                const startString: string | undefined = toBookmark.attributes.getNamedItem("data-start")?.value
-                const start: number = startString ? parseFloat(startString) : 0
-                const text = toBookmark.attributes.getNamedItem("data-text")?.value
+                const id = toBookmark.attributes.getNamedItem('data-cue-id')?.value;
+                const startString: string | undefined = toBookmark.attributes.getNamedItem('data-start')?.value;
+                const start: number = startString ? parseFloat(startString) : 0;
+                const text = toBookmark.attributes.getNamedItem('data-text')?.value;
                 // due to solidjs Context rules, this MUST be within BookmarkProvider or descendant
                 if (id && start && text) {
                     if (!isBookmarked(id)) {
@@ -169,11 +172,15 @@ export function BookmarkProvider(props: { children: JSX.Element, activeCueElemen
                     }
                 } else {
                     // simple test to let developer know if they inadvertently removed required part
-                    console.warn('cue was modified at some point to not have all three of \
+                    console.warn(
+                        'cue was modified at some point to not have all three of \
                         id, start, and text. Add it back or figure out an alternate bookmark \
-                        method for Ctrl + B in captionsControl!')
+                        method for Ctrl + B in captionsControl!'
+                    );
                 }
-            } else { console.warn("no selected caption to bookmark"); }
+            } else {
+                console.warn('no selected caption to bookmark');
+            }
         }
     }
 
