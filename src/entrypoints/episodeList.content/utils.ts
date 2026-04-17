@@ -1,8 +1,8 @@
 /**
  * Formats a lecture video title to be in a more useful, digestible format.
- * 
+ *
  * @param title - The original title of the lecture video to be formatted.
- * @returns A string that represents the formatted title in the following format: 
+ * @returns A string that represents the formatted title in the following format:
  * Weekday, Month Day, Year Time
  * If input string does not have a match, the title is kept the same.
  */
@@ -25,6 +25,6 @@ const formatLectureTitle = (title: string): string => {
     }
 
     return title;
-}
+};
 
-export {formatLectureTitle}
+export { formatLectureTitle };
