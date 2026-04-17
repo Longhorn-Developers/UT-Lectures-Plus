@@ -286,6 +286,7 @@ const App = (props: AppProps): JSX.Element => {
     });
 
     onCleanup(() => {
+        //video keydown is for videoTimeControl, and document keydown is for captionControl
         const video = props.videoElement();
         if (video) {
             video.removeEventListener('timeupdate', () => { });

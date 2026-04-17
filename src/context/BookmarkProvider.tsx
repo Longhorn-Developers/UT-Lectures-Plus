@@ -37,15 +37,14 @@ const BookmarkContext = createContext<BookmarkContextValue>({
 });
 
 /**
- * This provider manages bookmarks for the current URL, including a Ctrl + B bookmark of activeCue
+ * This provider manages bookmarks for the current URL, including a Ctrl + B bookmark of activeCue.
  *
  * @param props - The props object.
  * @param props.children - The child components to be rendered within the provider.
  * @param props.activeCueElement the currently active cue (transcript element)
  * @returns The BookmarkProvider component.
  */
-export function BookmarkProvider(props: { children: JSX.Element, activeCueElement: 
-    Accessor<HTMLDivElement | null> }): JSX.Element {
+export function BookmarkProvider(props: { children: JSX.Element, activeCueElement: Accessor<HTMLDivElement | null> }): JSX.Element {
     // Store all bookmarks organized by URL
     const [allBookmarks, setAllBookmarks] = createStore<BookmarksByUrl>({});
 
