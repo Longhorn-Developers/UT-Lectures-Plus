@@ -15,7 +15,6 @@ export default defineContentScript({
     cssInjectionMode: 'ui',
     async main(ctx) {
         const injectButtons = async () => {
-            
             const episodes = document.querySelectorAll('div.episode');
 
             episodes.forEach(async episode => {
@@ -35,7 +34,8 @@ export default defineContentScript({
                 // Create a mount point
                 const mountPoint = document.createElement('span');
                 mountPoint.className = 'utlp-bookmark-mount';
-                mountPoint.style.cssText = 'display: inline-block; vertical-align: middle; margin-left: 8px;';                titleEl.appendChild(mountPoint);
+                mountPoint.style.cssText = 'display: inline-block; vertical-align: middle; margin-left: 8px;';
+                titleEl.appendChild(mountPoint);
 
                 const ui = await createShadowRootUi(ctx, {
                     name: 'utlp-lecture-bookmark',
@@ -43,10 +43,7 @@ export default defineContentScript({
                     anchor: mountPoint,
                     onMount: container => {
                         container.style.cssText = 'display: contents;';
-                        render(
-                            () => <BookmarkButton id={id} title={title} url={url} />,
-                            container
-                        );
+                        render(() => <BookmarkButton id={id} title={title} url={url} />, container);
                     },
                 });
 

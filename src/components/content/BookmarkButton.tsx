@@ -26,7 +26,6 @@ const BookmarkButton = (props: BookmarkButtonProps): JSX.Element => {
     const [ready, setReady] = createSignal(false);
     let storage: StorageType | undefined;
 
-
     onMount(async () => {
         const { lectureBookmarksStorage } = await import('@/storage/lectureBookmarks');
         storage = lectureBookmarksStorage;
@@ -56,17 +55,13 @@ const BookmarkButton = (props: BookmarkButtonProps): JSX.Element => {
             <button
                 onClick={handleClick}
                 title={isBookmarked() ? 'Remove bookmark' : 'Bookmark this lecture'}
-                class="flex items-center justify-center w-9 h-9 rounded-md transition-colors duration-200"
+                class='flex items-center justify-center w-9 h-9 rounded-md transition-colors duration-200'
                 classList={{
                     'bg-ut-burntorange': isBookmarked(),
                     'bg-gray-200 hover:bg-gray-300': !isBookmarked(),
                 }}
             >
-            
-                <Bookmark
-                    class="w-6 h-6"
-                    color={isBookmarked() ? 'white' : 'currentColor'}
-                />
+                <Bookmark class='w-6 h-6' color={isBookmarked() ? 'white' : 'currentColor'} />
             </button>
         </Show>
     );
