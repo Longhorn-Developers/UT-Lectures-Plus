@@ -1,4 +1,4 @@
-import { createContext, useContext, JSX, createEffect, onMount, onCleanup } from 'solid-js';
+import { createContext, useContext, JSX, createEffect, onMount, onCleanup, Accessor } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { storage } from '#imports';
 
@@ -37,13 +37,17 @@ const BookmarkContext = createContext<BookmarkContextValue>({
 });
 
 /**
- * This provider manages bookmarks for the current URL.
+ * This provider manages bookmarks for the current URL, including a Ctrl + B bookmark of activeCue.
  *
  * @param props - The props object.
  * @param props.children - The child components to be rendered within the provider.
+ * @param props.activeCueElement the currently active cue (transcript element)
  * @returns The BookmarkProvider component.
  */
-export function BookmarkProvider(props: { children: JSX.Element }): JSX.Element {
+export function BookmarkProvider(props: {
+    children: JSX.Element;
+    activeCueElement: Accessor<HTMLDivElement | null>;
+}): JSX.Element {
     // Store all bookmarks organized by URL
     const [allBookmarks, setAllBookmarks] = createStore<BookmarksByUrl>({});
 
@@ -95,13 +99,15 @@ export function BookmarkProvider(props: { children: JSX.Element }): JSX.Element 
                 saveBookmarks();
             }
         });
+        // Add event listener for making a bookmark with Ctrl + B
+        document.addEventListener('keydown', checkBookmarkHotkey);
     });
 
     // Clean up event listeners when component unmounts
     onCleanup(() => {
         window.removeEventListener('beforeunload', saveBookmarks);
         document.removeEventListener('visibilitychange', saveBookmarks);
-
+        document.removeEventListener('keydown', checkBookmarkHotkey);
         // Final save when component unmounts
         saveBookmarks();
     });
@@ -130,6 +136,53 @@ export function BookmarkProvider(props: { children: JSX.Element }): JSX.Element 
     const isBookmarked = (id: string) => {
         return state.bookmarks.some(bookmark => bookmark.id === id);
     };
+
+    /** checkBookmarkHotkey bookmarks the current caption if there is one with the Ctrl + B hotkey,
+     * and removes the bookmark instead if it already exists. Has a 0.25 second cooldown to prevent
+     * accidental double-presses, and holding down the key will not trigger multiple events.
+     * <br> pre: current caption exists, ctrl + b pressed, event is not repeat
+     * <br> post: current caption is bookmarked or unbookmarked if the bookmark exists
+     */
+    let cooldownTimer: NodeJS.Timeout | null = null;
+    function checkBookmarkHotkey(event: KeyboardEvent) {
+        const key: string = event.key;
+        // prevent repeat by avoiding if event.repeat is true, otherwise if ctrl + b then bookmark
+        if (key == 'b' && event.ctrlKey && !event.repeat) {
+            if (cooldownTimer != null) {
+                // too soon since previous click, return before work done
+                return;
+            } else {
+                const cooldownAmount: number = 250; // milliseconds
+                cooldownTimer = setTimeout(() => {
+                    cooldownTimer = null; // Reset cooldown after 0.25sec delay
+                }, cooldownAmount);
+            }
+            const toBookmark: HTMLDivElement | null = props.activeCueElement();
+            if (toBookmark) {
+                const id = toBookmark.attributes.getNamedItem('data-cue-id')?.value;
+                const startString: string | undefined = toBookmark.attributes.getNamedItem('data-start')?.value;
+                const start: number = startString ? parseFloat(startString) : 0;
+                const text = toBookmark.attributes.getNamedItem('data-text')?.value;
+                // due to solidjs Context rules, this MUST be within BookmarkProvider or descendant
+                if (id && start && text) {
+                    if (!isBookmarked(id)) {
+                        addBookmark({ id, start, text });
+                    } else {
+                        removeBookmark(id);
+                    }
+                } else {
+                    // simple test to let developer know if they inadvertently removed required part
+                    console.warn(
+                        'cue was modified at some point to not have all three of \
+                        id, start, and text. Add it back or figure out an alternate bookmark \
+                        method for Ctrl + B in captionsControl!'
+                    );
+                }
+            } else {
+                console.warn('no selected caption to bookmark');
+            }
+        }
+    }
 
     return (
         <BookmarkContext.Provider
