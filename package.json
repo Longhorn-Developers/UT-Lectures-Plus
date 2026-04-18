@@ -23,6 +23,7 @@
         "@corvu/popover": "^0.2.0",
         "@tailwindcss/vite": "^4.2.1",
         "@typescript-eslint/eslint-plugin": "^8.57.0",
+        "@wxt-dev/storage": "^1.2.8",
         "eslint": "^9.39.4",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-jsdoc": "^50.8.0",
