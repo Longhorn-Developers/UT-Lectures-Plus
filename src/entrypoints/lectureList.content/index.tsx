@@ -65,7 +65,7 @@ export default defineContentScript({
                 ));
 
                 // Edit title
-                const editSpan = await mountAfter('utlp-edit-title', bookmarkSpan, () => (
+                await mountAfter('utlp-edit-title', bookmarkSpan, () => (
                     <EditTitleButton
                         titleEl={titleEl}
                         episodeUrl={url}
