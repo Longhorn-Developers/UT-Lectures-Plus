@@ -52,17 +52,21 @@ const BookmarkButton = (props: BookmarkButtonProps): JSX.Element => {
 
     return (
         <Show when={ready()}>
-            <button
-                onClick={handleClick}
-                title={isBookmarked() ? 'Remove bookmark' : 'Bookmark this lecture'}
-                class='flex items-center justify-center w-9 h-9 rounded-md transition-colors duration-200'
-                classList={{
-                    'bg-ut-burntorange': isBookmarked(),
-                    'bg-gray-200 hover:bg-gray-300': !isBookmarked(),
-                }}
-            >
-                <Bookmark class='w-6 h-6' color={isBookmarked() ? 'white' : 'currentColor'} />
-            </button>
+            <div class='relative group inline-flex'>
+                <button
+                    onClick={handleClick}
+                    class='flex items-center justify-center w-9 h-9 rounded-md transition-colors duration-200'
+                    classList={{
+                        'bg-ut-burntorange': isBookmarked(),
+                        'bg-gray-200 hover:bg-gray-300': !isBookmarked(),
+                    }}
+                >
+                    <Bookmark class='w-6 h-6' color={isBookmarked() ? 'white' : 'currentColor'} />
+                </button>
+                <span class='pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 text-lg text-white bg-gray-800 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-100'>
+                    {isBookmarked() ? 'Remove bookmark' : 'Bookmark this lecture'}
+                </span>
+            </div>
         </Show>
     );
 };
