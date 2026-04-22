@@ -20,5 +20,11 @@ export default defineConfig({
                 id: 'ut-lectures-plus@ut.com',
             },
         },
+        web_accessible_resources: [
+            {
+                resources: ['LHD_Logo_Hookem.svg'],
+                matches: ['*://*.la.utexas.edu/*'],
+            },
+        ],
     },
 });
