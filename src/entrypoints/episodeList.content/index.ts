@@ -46,7 +46,7 @@ function styleCourseBlock() {
             paddingBottom: '15px',
             paddingLeft: '20px',
             borderRadius: '4px',
-        })
+        });
     });
 }
 
