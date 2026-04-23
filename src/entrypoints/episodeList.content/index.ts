@@ -8,12 +8,12 @@ const COLORS = {
 };
 
 const NAV_LINKS = [
-    { href: 'https://discord.gg/mybTUaf6jn', icon: 'ph-discord-logo' },
-    { href: 'https://www.instagram.com/longhorndevelopers/', icon: 'ph-instagram-logo' },
-    { href: 'https://www.linkedin.com/company/longhorn-developers/', icon: 'ph-linkedin-logo' },
-    { href: 'https://github.com/Longhorn-Developers/UT-Lectures-Plus', icon: 'ph-github-logo' },
-    { href: null, icon: 'ph-moon' },
-    { href: null, icon: 'ph-gear' },
+    { name: 'Discord', href: 'https://discord.gg/mybTUaf6jn', icon: 'ph-discord-logo' },
+    { name: 'Instagram', href: 'https://www.instagram.com/longhorndevelopers/', icon: 'ph-instagram-logo' },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/longhorn-developers/', icon: 'ph-linkedin-logo' },
+    { name: 'Github', href: 'https://github.com/Longhorn-Developers/UT-Lectures-Plus', icon: 'ph-github-logo' },
+    { name: 'Dark Mode', href: null, icon: 'ph-moon' },
+    { name: 'Settings', href: null, icon: 'ph-gear' },
 ];
 
 function injectStylesheets() {
