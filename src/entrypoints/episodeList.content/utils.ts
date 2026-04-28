@@ -6,25 +6,26 @@
  * Weekday, Month Day, Year Time
  * If input string does not have a match, the title is kept the same.
  */
-const formatLectureTitle = (title: string): string => {
-    const match = title?.match(/(?<time>\d+:\d+[ap]m)\s*\((?<month>\d+)\/(?<day>\d+)\/(?<year>\d+)\)/);
+function formatLectureTitle(title: string): string | null {
+    const timeMatch = title.match(/\d+:\d+[ap]m/);
+    const dateMatch = title.match(/\((\d+)\/(\d+)\/(\d+)\)/);
 
-    if (match?.groups) {
-        const { time, month, day, year } = match.groups;
-        //time: "3:00pm", month: "01", day: "01", year: "2000"
-        const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    if (!timeMatch || !dateMatch) return null;
 
-        const formatted = date.toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        });
+    const time = timeMatch[0];
+    const [, month, day, year] = dateMatch;
 
-        return `${formatted} ${time}`;
-    }
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
 
-    return title;
-};
+    const parts = new Intl.DateTimeFormat('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    }).formatToParts(date);
+
+    const get = (type: string) => parts.find(p => p.type === type)?.value ?? '';
+    return `${get('weekday')} ${get('month')} ${get('day')}, ${get('year')} ${time}`;
+}
 
 export { formatLectureTitle };
