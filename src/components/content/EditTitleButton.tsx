@@ -84,15 +84,15 @@ const EditTitleButton = (props: EditTitleButtonProps): JSX.Element => {
         <div class='relative group inline-flex'>
             <button
                 onClick={() => (isEditing() ? commitSave() : startEditing())}
-                class='flex items-center justify-center w-9 h-9 rounded-md transition-colors duration-200 bg-gray-200 hover:bg-gray-300'
+                class='flex items-center justify-center w-7 h-7 rounded-md transition-colors duration-200 bg-gray-200 hover:bg-gray-300'
                 classList={{ 'bg-ut-burntorange hover:bg-ut-burntorange': isEditing() }}
             >
-                <Show when={isEditing()} fallback={<Pencil class='w-5 h-5' />}>
-                    <Check class='w-5 h-5' color='white' />
+                <Show when={isEditing()} fallback={<Pencil class='w-4 h-4' />}>
+                    <Check class='w-4 h-4' color='white' />
                 </Show>
             </button>
-            <span class='pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 text-lg text-white bg-gray-800 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-100'>
-                {isEditing() ? 'Save (Enter) · Cancel (Esc)' : 'Edit lecture title'}
+            <span class='pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-1.5 py-0.5 text-xs text-white bg-gray-800 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-100'>
+                {isEditing() ? 'Save (Enter) · Cancel (Esc)' : 'Edit title'}
             </span>
         </div>
     );
