@@ -1,5 +1,7 @@
 import { browser, defineContentScript } from '#imports';
 import { formatLectureTitle } from './utils';
+import { getCurrentMode, applyViewMode, styleEpisodeCard, saveOriginalPositions } from './gridView';
+import { buildViewToggle } from './viewToggle';
 
 const COLORS = {
     burntorange: '#bf5700',
@@ -163,5 +165,34 @@ export default defineContentScript({
         if (faq_link) faq_link.style.fontFamily = 'Roboto Flex';
 
         formatEpisodeTitles();
+
+        if (!document.getElementById('utlp-view-toolbar')) {
+            const h2 = document.querySelector<HTMLElement>('h2');
+            if (h2) {
+                h2.insertAdjacentElement('afterend', buildViewToggle());
+            }
+        }
+
+        saveOriginalPositions();
+        applyViewMode(getCurrentMode());
+
+        const observer = new MutationObserver(() => {
+            const mode = getCurrentMode();
+
+            document.querySelectorAll<HTMLElement>('div.episode').forEach(ep => {
+                if (ep.dataset.utlpViewMode !== mode) {
+                    styleEpisodeCard(ep, mode);
+                }
+
+                const actionsRow = ep.querySelector<HTMLElement>('[data-utlp-card-actions]');
+                if (actionsRow) {
+                    ep.querySelectorAll<HTMLElement>('span[style*="inline-flex"]').forEach(span => {
+                        if (span.parentElement !== actionsRow) actionsRow.appendChild(span);
+                    });
+                }
+            });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
     },
 });
