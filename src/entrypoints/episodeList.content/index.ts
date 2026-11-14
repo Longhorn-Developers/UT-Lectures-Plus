@@ -148,33 +148,52 @@ function formatEpisodeTitles() {
 
 export default defineContentScript({
     matches: ['*://*.la.utexas.edu/player'],
+    runAt: 'document_start',
     async main() {
-        injectStylesheets();
-        removeElements('h2', 'p', '#lo_logo', 'hr');
-
-        const body = document.querySelector<HTMLElement>('body');
-        if (body) body.style.padding = '65px 65px 130px 65px';
-
-        styleHeader();
-        styleCourseBlock();
-        buildHeaderRow();
-
-        const faq_link = document.querySelector<HTMLElement>(
-            'a[href="https://sites.la.utexas.edu/lecturesonline/students/faq"]'
-        );
-        if (faq_link) faq_link.style.fontFamily = 'Roboto Flex';
-
-        formatEpisodeTitles();
-
-        if (!document.getElementById('utlp-view-toolbar')) {
-            const h2 = document.querySelector<HTMLElement>('h2');
-            if (h2) {
-                h2.insertAdjacentElement('afterend', buildViewToggle());
+        const style = document.createElement('style');
+        style.id = 'hide-original';
+        style.textContent = `
+            html {
+                visibility: hidden !important;
             }
+        `;
+        document.documentElement.appendChild(style);
+        if (document.readyState === 'loading') {
+            await new Promise<void>(resolve =>
+                document.addEventListener('DOMContentLoaded', () => resolve(), { once: true })
+            );
         }
+        try {
+            injectStylesheets();
+            removeElements('h2', 'p', '#lo_logo', 'hr');
 
-        saveOriginalPositions();
-        applyViewMode(getCurrentMode());
+            const body = document.querySelector<HTMLElement>('body');
+            if (body) body.style.padding = '65px 65px 130px 65px';
+
+            styleHeader();
+            styleCourseBlock();
+            buildHeaderRow();
+
+            const faq_link = document.querySelector<HTMLElement>(
+                'a[href="https://sites.la.utexas.edu/lecturesonline/students/faq"]'
+            );
+            if (faq_link) faq_link.style.fontFamily = 'Roboto Flex';
+
+            formatEpisodeTitles();
+
+            if (!document.getElementById('utlp-view-toolbar')) {
+                const h2 = document.querySelector<HTMLElement>('h2');
+                if (h2) {
+                    h2.insertAdjacentElement('afterend', buildViewToggle());
+                }
+            }
+
+            saveOriginalPositions();
+            applyViewMode(getCurrentMode());
+        } finally {
+            // Always reveal the page, even if setup threw
+            style.remove();
+        }
 
         const observer = new MutationObserver(() => {
             const mode = getCurrentMode();
