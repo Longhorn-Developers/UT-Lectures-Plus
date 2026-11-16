@@ -36,7 +36,7 @@ export default defineContentScript({
                     if (!active || !tracks) return;
                     for (let i = 0; i < tracks.length; i++) {
                         const track = tracks[i];
-                        if ((track.kind === 'captions' || track.kind === 'subtitles') && track.mode !== 'disabled') {
+                        if (track.kind === 'captions' && track.mode !== 'disabled') {
                             track.mode = 'disabled';
                         }
                     }
@@ -65,7 +65,7 @@ export default defineContentScript({
                     element.removeEventListener('keydown', allowCaptionChoice, true);
                 };
 
-                //Stop override if user chooses to enable captions themselves
+                //Stop override if user chooses to enable captions themselves using Enter or Space
                 const allowCaptionChoice = (event: Event) => {
                     if (!event.isTrusted) return;
                     if (event instanceof KeyboardEvent && event.key !== 'Enter' && event.key !== ' ') return;
