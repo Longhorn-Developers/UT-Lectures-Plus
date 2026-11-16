@@ -19,6 +19,7 @@ export default defineContentScript({
     world: 'MAIN',
     runAt: 'document_start',
     main() {
+        //Checks and prevents attaching to the same player twice and waits until API's are ready
         const initialized = new WeakSet<Player>();
 
         const setup = (player: Player) => {
@@ -30,6 +31,7 @@ export default defineContentScript({
                 let tracks: TextTrackList | undefined;
                 const element = player.el();
 
+                //Loops through video player's tracks and visably disable the subtitles
                 const disableCaptions = () => {
                     if (!active || !tracks) return;
                     for (let i = 0; i < tracks.length; i++) {
@@ -63,6 +65,7 @@ export default defineContentScript({
                     element.removeEventListener('keydown', allowCaptionChoice, true);
                 };
 
+                //Stop override if user chooses to enable captions themselves
                 const allowCaptionChoice = (event: Event) => {
                     if (!event.isTrusted) return;
                     if (event instanceof KeyboardEvent && event.key !== 'Enter' && event.key !== ' ') return;
