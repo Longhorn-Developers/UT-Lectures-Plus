@@ -97,7 +97,7 @@ export default defineContentScript({
             return true;
         };
 
-        //Recheck if Video.js has loaded. 
+        //Recheck if Video.js has loaded.
         if (!connect()) {
             const timer = window.setInterval(() => {
                 if (connect()) window.clearInterval(timer);
