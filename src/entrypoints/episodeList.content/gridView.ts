@@ -1,3 +1,5 @@
+import { attachVideoThumbnail } from './thumbnails';
+
 export const VIEW_MODE_KEY = 'utlp-view-mode';
 
 let listResizeObservers: ResizeObserver[] = [];
@@ -102,6 +104,7 @@ function applyGridCard(episode: HTMLElement, link: HTMLAnchorElement | null, tit
         thumb.style.position = 'relative';
     }
     thumb.style.display = 'block';
+    attachVideoThumbnail(thumb, link?.href);
 
     thumb.addEventListener('click', e => {
         e.stopPropagation();
