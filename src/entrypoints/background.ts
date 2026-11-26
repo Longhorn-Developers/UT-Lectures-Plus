@@ -7,36 +7,33 @@ export default defineBackground(() => {
     let isListenerActive = false;
 
     // Define the listener function separately so we can reference it for removal
-    const requestListener = (details: Browser.webRequest.WebRequestBodyDetails) => {
+    const requestListener = (details: Browser.webRequest.OnBeforeRequestDetails): undefined => {
+        // Prevents repeated duplicate responses to background requests
+        if (details.tabId < 0) {
+            return undefined;
+        }
         if (details.url.endsWith('.vtt')) {
             const url = new URL(details.url);
             getVTTFile(url.toString())
                 .then(async text => {
-                    // Remove the listener after successfully getting the VTT file
-                    browser.webRequest.onBeforeRequest.removeListener(requestListener);
-                    isListenerActive = false;
-
                     const message = {
                         type: 'vtt-file',
                         data: text,
                         url: details.url,
                     };
 
-                    // Send the message to the newly connected content script as it will have a separate transcript from the other tabs
-                    const currentTab = await browser.tabs.query({
-                        active: true,
-                        currentWindow: true,
-                    });
-                    const currentTabId = currentTab[0]?.id;
+                    // Send the message to the tab which requested the transcript, rather than the active tab
+                    const port = connections[details.tabId];
 
-                    if (currentTabId && connections[currentTabId]) {
-                        connections[currentTabId].postMessage(message);
+                    if (port) {
+                        port.postMessage(message);
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching VTT file:', error);
                 });
         }
+        return undefined;
     };
 
     const addVTTListener = () => {
